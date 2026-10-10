@@ -1,0 +1,11 @@
+﻿business_function,priority,revenue_impact,regulatory_impact,downtime_tolerance,owner,notes
+Customer-facing web payments,P1,5,5,low,ai-anon,Hard downtime SLA; PCI-scoped
+Customer login and account portal,P1,5,4,low,ai-anon,PII; SLA-bound
+Internal VPN and admin access,P2,3,4,medium,ai-anon,Required for ops; no direct revenue
+Marketing website and brochure,P4,2,1,high,ai-anon,Brand only; tolerate outages
+Internal file share and wiki,P3,2,2,medium,ai-anon,Productivity loss; not customer-facing
+Mobile app,P2,4,3,low,ai-anon,Revenue-generating; PCI in-app
+Build / CI / source code,P2,3,3,medium,ai-anon,Blocks releases if down
+Mail and identity,P2,3,4,medium,ai-anon,Core to ops
+Data and analytics pipelines,P3,2,2,medium,ai-anon,Eventual OK
+Backup and recovery,P2,2,5,medium,ai-anon,Compliance-critical

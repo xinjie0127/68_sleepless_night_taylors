@@ -1,0 +1,20 @@
+﻿asset_id,name,asset_type,criticality,owner,team,location,environment,data_sensitivity,internet_exposed,last_patched
+A-001,web-prod-01.web.acme.local,Web Server,Critical,ai-anon,Web Platform,Frankfurt DC,production,PII,yes,2026-08-20
+A-002,customer-portal.app.acme.local,Web Application,Critical,ai-anon,App Platform,Frankfurt DC,production,PII,yes,2026-07-15
+A-003,payments.acme.local,Application,Critical,ai-anon,Payments,Frankfurt DC,production,PCI,yes,2026-06-10
+A-004,vpn.acme.local,Network,Critical,ai-anon,IT Ops,Frankfurt DC,production,Internal,yes,2026-09-01
+A-005,dev-db-03.db.acme.local,Database,High,ai-anon,Data Eng,Frankfurt DC,staging,Internal,no,2026-05-12
+A-006,acme-logs (S3),Cloud Storage,High,ai-anon,Platform,AWS eu-central-1,production,Confidential,yes,UNKNOWN
+A-007,mail01.mail.acme.local,Mail Server,High,ai-anon,IT Ops,Frankfurt DC,production,Confidential,no,2026-04-01
+A-008,out.marketing.acme.local,Website,Medium,ai-anon,Marketing,Frankfurt DC,production,Public,yes,2026-08-05
+A-009,github.com/acme,Code Repository,Critical,ai-anon,Engineering,GitHub Cloud,production,Confidential,yes,UNKNOWN
+A-010,backup-tape-lot-0917,Backup,High,ai-anon,IT Ops,Offsite Vendor,production,Confidential,no,UNKNOWN
+A-011,brochure.acme.com,Website,Low,ai-anon,Marketing,AWS us-east-1,production,Public,yes,2026-08-10
+A-012,internal-api.acme.local,API,High,ai-anon,App Platform,Frankfurt DC,production,Internal,no,2026-07-22
+A-013,laptop-nova,laptop-nova,laptop-nova,Medium,ai-anon,Engineering,Remote,production,Internal,no,UNKNOWN
+A-014,wiki.acme.local,Web Application,Medium,ai-anon,IT Ops,Frankfurt DC,production,Internal,no,UNKNOWN
+A-015,filesac.acme.local,File Server,High,ai-anon,IT Ops,Frankfurt DC,production,Confidential,no,2026-03-18
+A-016,ns1.acme.local,Name Server,Medium,ai-anon,IT Ops,Frankfurt DC,production,Public,yes,2026-07-30
+A-017,jenkins.acme.local,Build Server,High,ai-anon,Engineering,Frankfurt DC,production,Confidential,no,2026-02-14
+A-018,edge-fw-01.acme.local,Firewall,Critical,ai-anon,IT Ops,Frankfurt DC,production,Internal,yes,2026-08-12
+A-019,mobile-app-v3.2,Mobile App,High,ai-anon,Mobile Eng,App Store,production,PII,yes,UNKNOWN

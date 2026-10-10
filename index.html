@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FixFlow — Remediation Copilot</title>
+  <link rel="stylesheet" href="styles.css?v=22">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">FF</div>
+      <div>
+        <div class="brand-name">FixFlow</div>
+        <div class="brand-tag">App analysis &rarr; guided fix &rarr; verified proof</div>
+      </div>
+    </div>
+    <button class="btn btn-ghost" id="newReportBtn" hidden>New report</button>
+  </header>
+
+  <!-- SCREEN 1: UPLOAD + ANALYZE -->
+  <div class="screen" id="s-upload">
+    <!-- App upload view -->
+    <div id="uploadView">
+      <div class="hero">
+        <h1>Upload your app. We'll find the <span class="hl">vulnerabilities</span>.</h1>
+        <p>FixFlow performs automated security analysis on your web or mobile application &mdash; static code analysis, dynamic testing, and API discovery &mdash; then generates a remediation-ready pentest report with step-by-step fix instructions.</p>
+      </div>
+      <div class="upload-zone" id="uploadZone">
+        <div class="upload-icon">📱</div>
+        <div class="upload-title">Drop your application (APK, IPA, ZIP, or web bundle)</div>
+        <div class="upload-sub">or click to browse</div>
+        <input type="file" id="appFile" accept=".apk,.ipa,.zip,.war,.jar,.tar,.gz,.tgz" hidden>
+      </div>
+      <div class="upload-or"><span>or</span></div>
+      <button class="btn btn-primary btn-lg" id="loadSampleBtn">Try with sample application</button>
+      <div class="upload-secondary">
+        Already have a pentest report? <a id="uploadPdfLink">Upload PDF instead</a>
+      </div>
+    </div>
+    <!-- Scanning animation view -->
+    <div class="scan-view" id="scanView" hidden>
+      <div class="scan-icon">&#128269;</div>
+      <div class="scan-status" id="scanStatus">Initializing...</div>
+      <div class="scan-bar-wrap"><div class="scan-bar" id="scanBar"></div></div>
+      <div class="scan-percent" id="scanPercent">0%</div>
+      <div class="scan-log" id="scanLog"></div>
+      <div class="scan-found">
+        <span class="scan-found-label">Vulnerabilities found:</span>
+        <span class="scan-found-count" id="scanFoundCount">0</span>
+      </div>
+    </div>
+    <!-- PDF upload view (secondary) -->
+    <div id="pdfUploadView" hidden>
+      <div class="hero">
+        <h1>Upload your <span class="hl">pentest report</span></h1>
+        <p>Already have a pentest report PDF? Upload it and FixFlow will extract the findings and guide you through remediation.</p>
+      </div>
+      <div class="upload-zone" id="pdfUploadZone">
+        <div class="upload-icon">📄</div>
+        <div class="upload-title">Drop your pentest report (PDF)</div>
+        <div class="upload-sub">or click to browse</div>
+        <input type="file" id="pdfFile" accept=".pdf" hidden>
+      </div>
+      <div class="upload-secondary">
+        Want to analyze your app instead? <a id="backToAppLink">Upload application</a>
+      </div>
+      <div class="upload-status" id="uploadStatus"></div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: FINDINGS -->
+  <div class="screen" id="s-findings" hidden>
+    <div class="findings-header">
+      <h1><span id="findingsCount">0</span> findings extracted</h1>
+      <p class="muted" id="findingsSource"></p>
+    </div>
+    <div class="risk-summary" id="riskSummary"></div>
+    <div class="report-card" id="downloadReportBtn" hidden>
+      <div class="report-card-label">Pentest report ready</div>
+      <button type="button" class="report-card-btn">Download report &darr;</button>
+    </div>
+    <div class="findings-filter" id="findingsFilter"></div>
+    <div class="groups-section" id="groupsSection"></div>
+    <div class="findings-grid" id="findingsGrid"></div>
+  </div>
+
+  <!-- SCREEN 3: FIX SESSION -->
+  <div class="screen" id="s-fix" hidden>
+    <div class="fix-topbar">
+      <button class="btn btn-ghost" id="fixBack">&larr; Back</button>
+      <div class="fix-title-wrap">
+        <span class="sev-badge" id="fixSev"></span>
+        <h2 id="fixTitle"></h2>
+      </div>
+      <div class="fix-right">
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" id="fixProgress"></div></div>
+          <span class="progress-text" id="fixProgressText">0%</span>
+        </div>
+        <span class="status-badge status-pending" id="fixStatus">Not started</span>
+      </div>
+    </div>
+    <div class="stepper" id="stepper"></div>
+    <div class="fix-content" id="fixContent"></div>
+    <div class="fix-nav">
+      <button class="btn" id="fixPrev">&larr; Previous</button>
+      <button class="btn btn-primary" id="fixNext">Next &rarr;</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <!-- AI Chat Assistant -->
+  <button class="chat-fab" id="chatFab" hidden>Ask AI</button>
+  <div class="chat-panel" id="chatPanel" hidden>
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <span class="chat-avatar">AI</span>
+        <div>
+          <div class="chat-title">Remediation assistant</div>
+          <div class="chat-status" id="chatStatus">Online</div>
+        </div>
+      </div>
+      <button class="chat-close" id="chatClose">&times;</button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-suggestions" id="chatSuggestions"></div>
+    <div class="chat-input-wrap">
+      <input type="text" class="chat-input" id="chatInput" placeholder="Ask about this vulnerability...">
+      <button class="chat-send" id="chatSend">Send</button>
+    </div>
+  </div>
+
+  <script src="lib/pdf.min.js"></script>
+  <script src="lib/jspdf.umd.min.js"></script>
+  <script src="lib/jspdf.plugin.autotable.min.js"></script>
+  <script src="app.js?v=22"></script>
+</body>
+</html>

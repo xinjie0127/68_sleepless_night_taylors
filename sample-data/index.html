@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FixFlow — Remediation Copilot</title>
+  <link rel="stylesheet" href="styles.css?v=6">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">FF</div>
+      <div>
+        <div class="brand-name">FixFlow</div>
+        <div class="brand-tag">Pentest report → guided fix → verified proof</div>
+      </div>
+    </div>
+    <button class="btn btn-ghost" id="newReportBtn" hidden>New report</button>
+  </header>
+
+  <!-- SCREEN 1: UPLOAD -->
+  <div class="screen" id="s-upload">
+    <div class="hero">
+      <h1>From Pentest Report to <span class="hl">Verified Fix</span></h1>
+      <p>Pentest reports tell you <em>what's</em> broken. FixFlow shows you <em>how</em> to fix it — step by step, with real commands and proof of fix.</p>
+    </div>
+    <div class="upload-zone" id="uploadZone">
+      <div class="upload-icon">📄</div>
+      <div class="upload-title">Drop your pentest report (PDF)</div>
+      <div class="upload-sub">or click to browse</div>
+      <input type="file" id="pdfFile" accept=".pdf" hidden>
+    </div>
+    <div class="upload-or"><span>or</span></div>
+    <button class="btn btn-primary btn-lg" id="loadSampleBtn">Try with sample report</button>
+    <div class="upload-status" id="uploadStatus"></div>
+  </div>
+
+  <!-- SCREEN 2: FINDINGS -->
+  <div class="screen" id="s-findings" hidden>
+    <div class="findings-header">
+      <h1><span id="findingsCount">0</span> findings extracted</h1>
+      <p class="muted" id="findingsSource"></p>
+    </div>
+    <div class="findings-summary" id="findingsSummary"></div>
+    <div class="groups-section" id="groupsSection"></div>
+    <div class="findings-grid" id="findingsGrid"></div>
+  </div>
+
+  <!-- SCREEN 3: FIX SESSION -->
+  <div class="screen" id="s-fix" hidden>
+    <div class="fix-topbar">
+      <button class="btn btn-ghost" id="fixBack">&larr; Back</button>
+      <div class="fix-title-wrap">
+        <span class="sev-badge" id="fixSev"></span>
+        <h2 id="fixTitle"></h2>
+      </div>
+      <div class="fix-right">
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" id="fixProgress"></div></div>
+          <span class="progress-text" id="fixProgressText">0%</span>
+        </div>
+        <span class="status-badge status-pending" id="fixStatus">Not started</span>
+      </div>
+    </div>
+    <div class="stepper" id="stepper"></div>
+    <div class="fix-content" id="fixContent"></div>
+    <div class="fix-nav">
+      <button class="btn" id="fixPrev">&larr; Previous</button>
+      <button class="btn btn-primary" id="fixNext">Next &rarr;</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="lib/pdf.min.js"></script>
+  <script src="app.js?v=6"></script>
+</body>
+</html>
